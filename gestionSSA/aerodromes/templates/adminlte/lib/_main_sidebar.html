@@ -1,0 +1,73 @@
+{% extends 'adminlte/lib/_main_sidebar.html' %}
+
+{% block nav_links %}
+  
+    <li>
+        <a href="{% url 'aerodromes:accueilplanform' %}">
+            <i class="fa fa-dashboard"></i> <span>Tableau de Bord</span>
+        </a>
+    </li>
+    <li>
+        <a href="{% url 'aerodromes:accueil' %}">
+            <i class="fa fa-plane"></i> <span>Aérodromes</span>
+       
+        </a>
+        
+    </li>
+    <li>
+        <a href="#">
+            <i class="fa fa-eye"></i> <span>Inspections</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+        </a>
+        <ul class="treeview-menu">
+            <li><a href="{% url 'aerodromes:psc' %}"><i class="fa fa-circle-o"></i> PSC Aér. Internationaux</a></li>
+            <li><a href="{% url 'aerodromes:pscr' %}"><i class="fa fa-circle-o"></i> PSC Aér. Nationaux</a></li>
+            <li><a href="{% url 'aerodromes:realise' %}"><i class="fa fa-circle-o"></i> Inspections Réalisées</a></li>
+            
+          </ul>
+    </li>
+    
+    <li>
+        <a href="{% url 'aerodromes:accueilevts' %}">
+            <i class="fa fa-warning"></i> <span>Evénements de Sécurité</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+        </a>
+        <ul class="treeview-menu">
+        		<li><a href="{% url 'aerodromes:accueilevts' %}"><i class="fa fa-circle-o"></i>Tous Evénements</a></li>
+            <li><a href="{% url 'aerodromes:perilanimal' %}"><i class="fa fa-circle-o"></i> Péril animalier</a></li>
+            <li><a href="{% url 'aerodromes:feunalaser' %}"><i class="fa fa-circle-o"></i> Feux non aéro./Laser</a></li>
+            <li><a href="{% url 'aerodromes:requetesepecif' %}"><i class="fa fa-circle-o"></i> Requêtes spécifiques </a></li>
+            
+            
+          </ul>
+    </li>
+    <li>
+        <a href="{% url 'aerodromes:planning' %}">
+            <i class="fa fa-graduation-cap"></i> <span>Formations</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+        </a>
+        <ul class="treeview-menu">
+            <li><a href="{% url 'aerodromes:planning' %}"><i class="fa fa-circle-o"></i> Planning Formations</a></li>
+            <!--<li><a href="#"><i class="fa fa-circle-o"></i> Réalisation Planning</a></li>-->
+            <li><a href="{% url 'aerodromes:formationsrealisees' %}"><i class="fa fa-circle-o"></i> Formations Réalisées</a></li>
+            <li><a href="{% url 'aerodromes:prioriteformations' %}"><i class="fa fa-circle-o"></i> Priorité Formations</a></li>
+            <li><a href="{% url 'aerodromes:listeinspecteurs' %}"><i class="fa fa-circle-o"></i> Inspecteurs</a></li>
+          </ul>
+    </li>
+    <li>
+        <a href="{% url 'aerodromes:documentation' %}">
+            <i class="fa fa-book"></i> <span>Documentation</span>
+        </a>
+    </li>
+    <li>
+        <a href="/admin">
+            <i class="fa fa-users"></i> <span>Administration du Système</span>
+        </a>
+    </li>
+{% endblock nav_links %}

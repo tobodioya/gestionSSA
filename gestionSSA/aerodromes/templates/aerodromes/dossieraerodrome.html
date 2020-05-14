@@ -1,0 +1,151 @@
+{% extends 'adminlte/base.html' %}
+{% load static %}
+
+{% block extra_head %}
+
+	<link href="{% static "aerodromes/fullcalendar/bower_components/fullcalendar/dist/fullcalendar.min.css" %}" rel="stylesheet" />
+	
+	 <!-- Bootstrap 3.3.7 -->
+  <link href="{% static "aerodromes/bower_components/bootstrap/dist/css/bootstrap.min.css" %}" rel="stylesheet" />
+  <!-- Font Awesome -->
+  <link href="{% static "aerodromes/bower_components/font-awesome/css/font-awesome.min.css" %}" rel="stylesheet"/>
+  <!-- Ionicons -->
+ <link href="{% static "aerodromes/bower_components/Ionicons/css/ionicons.min.css" %}"  rel="stylesheet"/>
+  <!-- DataTables -->
+  <link href="{% static "aerodromes/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css" %}" rel="stylesheet" />
+{% endblock %}
+{% block title %}ANACIM DNAA{% endblock %}
+{% block logo_href %}/{% endblock %}
+{% block page_name %}TABLEAU DE BORD{% endblock %}
+{% block page_actions %}{% endblock %}
+{% block page_description %}{% endblock %}
+{% block breadcrumbs %} {% endblock %}
+
+
+{% block content_wrapper %}
+  
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        DOSSIER AERODROME/
+        <small>NOM AERODROME :  {{ nomaeroaffiche }} - {{ statutaero }}</small>
+      </h1>
+     
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <!-- Small boxes (Stat box) -->
+      
+      
+      <div class="row">
+         <div class="col-xs-12">
+          
+
+          <div class="box">
+           
+            <!-- /.box-header -->
+            <div class="box-body table-responsive">
+              <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                  <th>Titre du document</th>
+                  <th>Date de production du document</th>
+                  <th>Fichier du document</th>
+                  
+                </tr>
+                </thead>
+                <tbody>
+                
+                {% for doc in documentsaerodrome %}
+                <tr>
+                  <td>
+                  {{ doc.descriptiondossier }}
+                                 
+                  </td>
+                  <td>{{ doc.datedoc }}</td>
+                                
+                  <td><a href="{{ doc.dossieraero.url }}">Telecharger le fichier</a></td>
+                  
+                  
+                </tr>
+                 {% endfor %}       
+               
+               
+              
+              </table>
+              </tbody>        
+             <tfoot>
+             </tfoot>
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+        </div>
+      
+       
+      </div>
+      <!-- /.row -->
+     
+      <div class="row">
+         <div class="col-xs-12">
+          
+
+          <div class="box">
+           
+            <!-- /.box-header -->
+            <div class="box-body">
+                <a href="./"><button type="button" class=" bg-green btn-flat "> RETOUR</button></a>
+              
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+        </div>
+      
+       
+      </div>
+      
+      
+    </section>
+    <!-- /.content -->
+  
+  </div>
+  <!-- /.content-wrapper -->        
+{% endblock %}
+
+{% block extra_foot %}
+
+
+<!-- jQuery 3 -->
+<!-- <script src="{% static "planformations/bower_components/jquery/dist/jquery.min.js" %}"></script>
+<!-- Bootstrap 3.3.7 -->
+<!-- <script src="{% static "planformations/bower_components/bootstrap/dist/js/bootstrap.min.js" %}"></script>
+<!-- DataTables -->
+<script src="{% static "aerodromes/bower_components/datatables.net/js/jquery.dataTables.js" %}"></script>
+<script src="{% static "aerodromes/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js" %}"></script>
+<!-- SlimScroll -->
+<script src="{% static "aerodromes/bower_components/jquery-slimscroll/jquery.slimscroll.min.js" %}"></script>
+<!-- FastClick -->
+<script src="{% static "aerodromes/bower_components/fastclick/lib/fastclick.js" %}"></script>
+
+
+<!-- page script -->
+<script>
+  $(function () {
+    $('#example1').DataTable()
+    $('#example2').DataTable({
+      'paging'      : true,
+      'lengthChange': false,
+      'searching'   : false,
+      'ordering'    : true,
+      'info'        : true,
+      'autoWidth'   : false
+    })
+  })
+</script>
+
+
+{% endblock %}

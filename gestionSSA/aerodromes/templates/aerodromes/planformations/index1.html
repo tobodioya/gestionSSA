@@ -1,0 +1,91 @@
+{% load static %}
+<!DOCTYPE html> <html>
+<head>
+
+<link rel="stylesheet" type="text/css" href="{% static 'planformations/style.css' %}" />
+
+
+    
+    <script src="https://maps.googleapis.com/maps/api/js?libraries=drawing,places"></script>	
+    <script>
+		var apiKey = 'AIzaSyCKL5BsRrZILubexy5rkVoD_sAbTpuo_FM';
+
+		var map;
+		var drawingManager;
+		var placeIdArray = [];
+		var polylines = [];
+		var snappedCoordinates = [];
+		var marker;
+
+		function initialize() {
+			  
+			  var monCentre = {lat: 14.70, lng: -17.45};
+			  var mapOptions = {
+    	 		 zoom: 7,
+    	  		 center: monCentre
+  		  	  };
+  			map = new google.maps.Map(document.getElementById('map'), mapOptions);
+  			
+  			marker = new google.maps.Marker({
+          position: monCentre,
+          map: map
+         });
+
+		  // Adds a Places search box. Searching for a place will center the map on that
+  		  // location.
+  			map.controls[google.maps.ControlPosition.RIGHT_TOP].push(document.getElementById('bar'));
+  			var autocomplete = new google.maps.places.Autocomplete(document.getElementById('autoc'));
+ 			autocomplete.bindTo('bounds', map);
+  			autocomplete.addListener('place_changed', function() {
+    					var place = autocomplete.getPlace();
+    					   
+   		   		if (place.geometry.viewport) {
+     		  		 		map.fitBounds(place.geometry.viewport);
+     		  		 		marker = new google.maps.Marker({
+          				position: map.getCenter(),
+          				map: map
+         			 });
+    					} else {
+     						 map.setCenter(place.geometry.location);
+      			 		 map.setZoom(14);
+      			 		 
+      			 		 
+    					}
+         });
+
+  // Enables the polyline drawing control. Click on the map to start drawing a
+  // polyline. Each click will add a new vertice. Double-click to stop drawing.
+  				drawingManager = new google.maps.drawing.DrawingManager({
+    				drawingMode: google.maps.drawing.OverlayType.POLYLINE,
+    				drawingControl: true,
+    				drawingControlOptions: {
+	      			position: google.maps.ControlPosition.BOTTOM_LEFT,
+      				drawingModes: [
+	     	 	 		  	google.maps.drawing.OverlayType.POLYLINE
+      				]
+    				},
+      			polylineOptions: {
+      				strokeColor: '#696969',
+      				strokeWeight: 2
+      			}
+ 				});
+  				drawingManager.setMap(map);
+
+
+		}
+		
+
+		$(window).load(initialize);
+    </script>
+  </head>
+
+	
+<body>
+    <div id="map"></div>
+    <div id="bar">
+      <p class="auto"><input type="text" id="autoc"/></p>
+      <p><a id="clear" href="#">Cliquez ici</a> pour effacer la carte.</p>
+    </div>
+  </body>
+</html>
+

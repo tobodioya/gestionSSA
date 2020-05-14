@@ -1,0 +1,245 @@
+{% extends 'adminlte/base.html' %}
+{% load static %}
+{% block extra_head %}
+<link href="{% static "aerodromes/fullcalendar/fullcalendar.css" %}" rel="stylesheet" />
+
+{% endblock %}
+{% block title %}ANACIM DNAA{% endblock %}
+{% block logo_href %}/{% endblock %}
+{% block page_name %}TABLEAU DE BORD{% endblock %}
+{% block page_actions %}{% endblock %}
+{% block page_description %}{% endblock %}
+{% block breadcrumbs %}
+
+{% endblock %}
+{% block content_wrapper %}
+  
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        INSPECTIONS/
+        <small>Aérodromes Régionaux</small>
+      </h1>
+     
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <!-- Small boxes (Stat box) -->
+     
+      <!-- /.row -->
+      <!-- Main row -->
+     <div class="row">
+       <div class="col-lg-3 col-xs-4">
+      
+       <div class="row">
+        <div class="col-lg-4 col-xs-4">
+        <h5>  AEROPORTS </h5>
+               
+        </div>
+        <div class="col-lg-8 col-xs-8">
+         <h5>ITEMS </h5>
+         
+           
+                
+             
+        </div>
+        </div>
+        <div class="row">
+        <div class="col-lg-4 col-xs-4">
+                
+                <button type="button" class="btn-block bg-green btn-flat margin">Zone Centre</button>
+                <button type="button" class="btn-block bg-yellow btn-flat margin">Zone Nord</button>
+                <button type="button" class="btn-block bg-blue btn-flat margin"> Zone Est</button>
+                <button type="button" class="btn-block bg-navy btn-flat margin">Zone Sud Est</button>
+                <button type="button" class="btn-block bg-red btn-flat margin">Zone Centre 2</button>
+                <button type="button" class="btn-block bg-white btn-flat margin">TOUS</button>
+                 
+        </div>
+        <div class="col-lg-8 col-xs-8">
+         
+            <div class="table-responsive mailbox-messages">
+             <table class="table table-hover table-striped">
+             <tbody>
+             <tr>
+                    <td><input type="checkbox"></td>
+                    <td class="mailbox-name"><a href="read-mail.html">SLI</a></td>
+             </tr>
+             <tr>
+                    <td><input type="checkbox"></td>
+                    <td class="mailbox-name"><a href="read-mail.html">Aire de mouvement </a></td>
+             </tr>
+             <tr>
+                    <td><input type="checkbox"></td>
+                    <td class="mailbox-name"><a href="read-mail.html">Procédure Urg</a></td>
+             </tr>
+             <tr>
+                    <td><input type="checkbox"></td>
+                    <td class="mailbox-name"><a href="read-mail.html">ELB</a></td>
+             </tr>
+             <tr>
+                    <td><input type="checkbox"></td>
+                    <td class="mailbox-name"><a href="read-mail.html">Contr. Obstacles </a></td>
+             </tr>
+             <tr>
+                    <td><input type="checkbox"></td>
+                    <td class="mailbox-name"><a href="read-mail.html">Procédure Exp</a></td>
+             </tr>
+             <tr>
+                    <td><input type="checkbox"></td>
+                    <td class="mailbox-name"><a href="read-mail.html">Personnel</a></td>
+             </tr>
+             <tr>
+                    <td><input type="checkbox"></td>
+                    <td class="mailbox-name"><a href="read-mail.html">SGS </a></td>
+             </tr>
+             <tr>
+                    <td><input type="checkbox"></td>
+                    <td class="mailbox-name"><a href="read-mail.html">Gestion RA</a></td>
+             </tr>
+             
+             <tr>
+             	<td><input type="checkbox">TOUS</td>
+             </tr>
+             </tbody>
+             </table>
+             </div>
+        </div>
+        </div>
+        </div>
+       <div class="col-lg-9 col-xs-8">
+      	 <div id="calendar"></div>
+       </div>
+      </div>
+    </section>
+    <!-- /.content -->
+    
+  </div>
+  <!-- /.content-wrapper -->    
+    
+     
+    
+{% endblock %}
+
+{% block extra_foot %}
+
+
+<!--<script src="{% static "planformations/bower_components/fullcalendar/dist/locale/fr.js" %}"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous"></script> -->
+<!--<script src="{% static "planformations/bower_components/jquery/dist/jquery.min.js" %}"></script>-->
+<script src="{% static "aerodromes/fullcalendar/bower_components/moment/moment.js" %}"></script>
+<script src="{% static "aerodromes/fullcalendar/fullcalendar.js" %}"></script>
+<script src="{% static "aerodromes/bower_components/fullcalendar/dist/locale/fr.js" %}"></script>
+<script type="text/javascript" >
+
+// Code goes here
+$(document).ready(function() {
+
+
+
+	 function couleur(nomaerodrome) {
+	 couleurevt = 'blue';
+	 if (nomaerodrome.search(/centre/i) >= 0) 
+	 	couleurevt = 'green';
+	 if (nomaerodrome.search(/nord/i) >= 0) 
+	 	couleurevt = 'orange';
+	  if (nomaerodrome.search(/est/i) >= 0) 
+	 	couleurevt = 'blue';
+	 if (nomaerodrome.search(/sud/i) >= 0) 
+	 	couleurevt = 'black';
+	 if (nomaerodrome.search(/centre 2/i) >= 0) 
+	 	couleurevt = 'red';
+	 		 
+	 return couleurevt;
+	 }
+	 
+
+  // page is now ready, initialize the calendar...
+
+  var calendar = $('#calendar').fullCalendar({
+    // put your options and callbacks here
+    //lang  : 'fr',
+    header: {
+      left: 'prev,next today',
+      center: 'title',
+      right: 'year,month,basicWeek,basicDay'
+
+    },
+     buttonText: {
+        today: "Aujourd'hui",
+        year : 'Année',
+        month: 'Mois',
+        week : 'Semaine',
+        day  : 'Jour'
+      },
+    
+    
+    
+    timezone: 'local',
+    height: "auto",
+    selectable: true,
+    dragabble: true,
+    defaultView: 'year',
+    yearColumns: 3,
+
+    durationEditable: true,
+    bootstrap: false,
+
+    events: [
+    
+     {% for i in listeinspectionsec %}
+        
+      
+    {
+      title: '{{ i.titreinspbfsc }}',
+      start:  '{{ i.debutinspbfsc }}',
+      end:  '{{ i.fininspbfsc }}',
+      allDay: true,
+      //editable: true,
+      
+      eventDurationEditable: true,
+      color : couleur('{{ i.aerodromeinspbfsc }}'),
+    }, 
+   
+    
+    {% endfor %}
+    
+    ],/*
+    select: function(start, end, allDay) {
+      var title = prompt('Libellé de la mission:');
+      if (title) {
+        var event = {
+          title: title,
+          start: start.clone(),
+          end: end.clone(),
+          allDay: true,
+          editable: true,
+          eventDurationEditable: true,
+          eventStartEditable: true,
+          color: 'red',
+        };
+
+
+        calendar.fullCalendar('renderEvent', event, true);
+      }
+    },*/
+
+     
+    eventRender: function(event, element) {
+    $(element).tooltip({title: event.title +  " du " + event.start.date() + " au " + event.end.date()});
+}
+    
+    
+  })
+});
+
+
+</script>
+
+{% endblock %}
+
+

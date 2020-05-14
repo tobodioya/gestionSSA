@@ -1,0 +1,181 @@
+{% extends 'adminlte/base.html' %}
+{% load static %}
+
+{% block extra_head %}
+
+	<link href="{% static "aerodromes/fullcalendar/bower_components/fullcalendar/dist/fullcalendar.min.css" %}" rel="stylesheet" />
+	
+	 <!-- Bootstrap 3.3.7 -->
+  <link href="{% static "aerodromes/bower_components/bootstrap/dist/css/bootstrap.min.css" %}" rel="stylesheet" />
+  <!-- Font Awesome -->
+  <link href="{% static "aerodromes/bower_components/font-awesome/css/font-awesome.min.css" %}" rel="stylesheet"/>
+  <!-- Ionicons -->
+ <link href="{% static "aerodromes/bower_components/Ionicons/css/ionicons.min.css" %}"  rel="stylesheet"/>
+  <!-- DataTables -->
+  <link href="{% static "aerodromes/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css" %}" rel="stylesheet" />
+{% endblock %}
+{% block title %}ANACIM DNAA{% endblock %}
+{% block logo_href %}/{% endblock %}
+{% block page_name %}TABLEAU DE BORD{% endblock %}
+{% block page_actions %}{% endblock %}
+{% block page_description %}{% endblock %}
+{% block breadcrumbs %} {% endblock %}
+
+
+{% block content_wrapper %}
+  
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        FORMATIONS REALISEES/
+        <small>Suivi des Indicateurs</small>
+      </h1>
+     
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+
+      
+      <div class="row">
+         <div class="col-xs-12">
+          
+
+          <div class="box">
+           
+            <!-- /.box-header -->
+            <div class="box-body table-responsive">
+              <table id="example2" class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                  <th>Code</th>
+                  <th>Type</th>
+                  <th>Lieu</th>
+                  <th>Période</th>
+                  <th>Département</th>
+                  <th>Agent Formé</th>
+                  <th>Périodicité</th>
+                  <th>Attestation</th>
+                  
+                </tr>
+                </thead>
+                <tbody>
+                
+                {% for formation in formationsrealisees %}
+                <tr>
+                  <td>
+                  {{ formation.codeform }}
+                    
+             
+                  </td>
+                  <td>{{ formation.typeformation }}</td>
+                  <td>{{ formation.lieuforma }}</td>
+                  <td>Du {{ formation.debutforma }} Au {{ formation.finforma }}</td>
+                  <td>{{ formation.agentaformer.serviceac.departementac.nomdep }}</td>
+                  <td>{{ formation.agentaformer.matriculeag }}-{{ formation.agentaformer.nomag }}</td>
+                  <td>{{ formation.periodicform }}</td>
+                  <td><a href="{{ formation.docdescriptif.url }}">Telecharger le document</a></td>
+                  
+                  
+                </tr>
+                 {% endfor %}       
+               
+               
+              </tbody>
+              </table>
+                     
+             <tfoot>
+             </tfoot>
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+        </div>
+      
+       
+      </div>
+      <!-- /.row -->
+      <section class="content-header">
+      <h1>
+        DOSSIER FORMATIONS /
+        <small>Suivi des Formations</small>
+      </h1>
+     
+    </section>
+      <div class="row">
+         <div class="col-xs-12">
+          
+
+          <div class="box">
+           
+            <!-- /.box-header -->
+            <div class="box-body">
+              <form action="{% url 'aerodromes:dossierformation' %}" method="post">
+               <div class="form-group"><p>
+                <label><h5>Choisir le code de la formation et valider pour afficher plus d'informations</h5> </label>
+                </p>
+                <br>
+                
+                 {% csrf_token %}
+                
+    				  {{ form }}
+    				</div>
+                
+              <input type="submit" value="Valider">
+              </form>  
+              
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+        </div>
+      
+       
+      </div>
+      
+      
+    </section>
+    <!-- /.content -->
+  
+  </div>
+  <!-- /.content-wrapper -->        
+{% endblock %}
+
+{% block extra_foot %}
+
+
+<!-- jQuery 3 -->
+<!-- <script src="{% static "planformations/bower_components/jquery/dist/jquery.min.js" %}"></script>
+<!-- Bootstrap 3.3.7 -->
+<!-- <script src="{% static "planformations/bower_components/bootstrap/dist/js/bootstrap.min.js" %}"></script>
+<!-- DataTables -->
+<script src="{% static "aerodromes/bower_components/datatables.net/js/jquery.dataTables.js" %}"></script>
+<script src="{% static "aerodromes/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js" %}"></script>
+<!-- SlimScroll -->
+<script src="{% static "aerodromes/bower_components/jquery-slimscroll/jquery.slimscroll.min.js" %}"></script>
+<!-- FastClick -->
+<script src="{% static "aerodromes/bower_components/fastclick/lib/fastclick.js" %}"></script>
+
+
+<!-- page script -->
+<script>
+  $(function () {
+   
+    $('#example2').DataTable({
+    	'pageLength'  : 3,
+      'paging'      : true,
+      'lengthChange': true,
+      'searching'   : true,
+      'ordering'    : true,
+      'info'        : true,
+      'autoWidth'   : true,
+      'lengthMenu'  : [ 1, 2, 3, 5, 10, 25, 50, 75, 100 ]
+      
+    })
+  })
+</script>
+
+
+{% endblock %}

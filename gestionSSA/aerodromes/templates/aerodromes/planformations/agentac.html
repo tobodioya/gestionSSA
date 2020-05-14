@@ -1,0 +1,35 @@
+{% extends 'adminlte/base.html' %}
+
+{% block title %}My App{% endblock %}
+{% block logo_href %}{% endblock %}
+{% block page_name %}AFFICHAGE AGENT{% endblock %}
+{% block page_actions %}action{% endblock %}
+{% block page_description %}Description{% endblock %}
+{% block breadcrumbs %}
+ { Breadcrumb implementation left to developers }
+{% endblock %}
+{% block content %}
+    Just some example content
+{% endblock %}
+{% load static %}
+
+
+<link rel="stylesheet" type="text/css" href="{% static 'planformations/style.css' %}">
+
+<h1>Bienvenue sur le site de gestion du service SA - Ajout d'un agent
+
+
+<img src="{% static "planformations/kho.JPG" %}" alt="Mon image">
+<p>Date actuelle : {{date}}</p>
+
+{% if envoiagentac %}
+    <p>Votre agent a bien été enregistré !</p>
+{% endif %}
+
+</h1>
+
+<form method="post" enctype="multipart/form-data" action=".">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Envoyer" />
+</form>

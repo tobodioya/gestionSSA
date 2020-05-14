@@ -1,0 +1,412 @@
+{% extends 'adminlte/base.html' %}
+{% load static %}
+{% block title %}ANACIM DNAA{% endblock %}
+{% block logo_href %}/{% endblock %}
+{% block page_name %}TABLEAU DE BORD{% endblock %}
+{% block page_actions %}{% endblock %}
+{% block page_description %}{% endblock %}
+{% block breadcrumbs %}
+
+{% endblock %}
+{% block content_wrapper %}
+  
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        INSPECTIONS/
+        <small>Suivi des Indicateurs</small>
+      </h1>
+     
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <!-- Small boxes (Stat box) -->
+      <div class="row">
+        <div class="col-lg-3 col-xs-6">
+          <!-- small box -->
+          <div class="small-box bg-aqua">
+            <div class="inner">
+              <h3>60<sup style="font-size: 20px">%</sup></h3>
+
+              <p>Conformité SOP</p>
+            </div>
+            <div class="icon">
+              <i class="ion ion-bag"></i>
+            </div>
+            <a href="#" class="small-box-footer">Plus d'info <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-3 col-xs-6">
+          <!-- small box -->
+          <div class="small-box bg-aqua">
+            <div class="inner">
+              <h3>53<sup style="font-size: 20px">%</sup></h3>
+
+              <p>Conformité IT</p>
+            </div>
+            <div class="icon">
+              <i class="ion ion-stats-bars"></i>
+            </div>
+            <a href="#" class="small-box-footer">Plus d'info <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-3 col-xs-6">
+          <!-- small box -->
+          <div class="small-box bg-aqua">
+            <div class="inner">
+              <h3>44<sup style="font-size: 20px">%</sup></h3>
+
+              <p>Réalisation PSC</p>
+            </div>
+            <div class="icon">
+              <i class="ion ion-person-add"></i>
+            </div>
+            <a href="#" class="small-box-footer">Plus d'info <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-3 col-xs-6">
+          <!-- small box -->
+          <div class="small-box bg-aqua">
+            <div class="inner">
+              <h3>65<sup style="font-size: 20px">%</sup></h3>
+
+              <p>Réalisation Planning Formations</p>
+            </div>
+            <div class="icon">
+              <i class="ion ion-pie-graph"></i>
+            </div>
+            <a href="#" class="small-box-footer">Plus d'info <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+        <!-- ./col -->
+      </div>
+      <!-- /.row -->
+      <!-- Main row -->
+      <div class="row" style='background-color: aqua'>      
+    
+       
+       <!-- right col (We are only adding the ID to make the widgets sortable)-->
+        <section class="col-lg-2 connectedSortable  text-center">
+			AEROPORTS
+
+        </section>
+        <!-- right col -->
+        <!-- Left col -->
+        <section class="col-lg-2 connectedSortable text-center">
+        ITEMS
+            
+        </section>
+        
+         <section class="col-lg-8 connectedSortable text-center ">
+                  <div class="col-lg-12">
+                     PERIODE
+            
+        				</div>
+        				
+        				<div class="row">
+                     <div class="col-lg-1 ">
+                        Jan
+            
+        				   </div>
+        				   <div class="col-lg-1 ">
+                        Fev
+            
+        				   </div>
+        				   <div class="col-lg-1 ">
+                        Mars
+            
+        				   </div>
+        				   <div class="col-lg-1 ">
+                        Avr
+            
+        				   </div>
+        				   <div class="col-lg-1 ">
+                        Mai
+            
+        				   </div>
+        				   <div class="col-lg-1 ">
+                        Juin
+            
+        				   </div>
+        				   <div class="col-lg-1 ">
+                        Juil
+            
+        				   </div>
+        				   <div class="col-lg-1 ">
+                        Aout
+        				   </div>
+        				   <div class="col-lg-1 ">
+                        Sept
+            
+        				   </div>
+        				   <div class="col-lg-1 ">
+                        Oct
+            
+        				   </div>
+        				   <div class="col-lg-1 ">
+                        Nov
+            
+        				   </div>
+        				   <div class="col-lg-1 ">
+                        Dec
+            
+        				   </div>
+            
+        				</div>
+        				<div class="row">
+        				<div class="col-lg-1 ">
+        			   
+                         <div class="col-lg-3 ">
+                        1
+            
+        				       </div>
+        				       <div class="col-lg-3 ">
+                        2
+            
+        				       </div>
+        				       <div class="col-lg-3 ">
+                        3
+            
+        				       </div>
+        				       <div class="col-lg-3 ">
+                        
+            4
+        				       </div>
+                
+        				   </div>
+        				   <div class="col-lg-1 ">
+                         <div class="col-lg-3 ">
+                       a
+            
+        				       </div>
+        				       <div class="col-lg-3 ">
+                        b
+            
+        				       </div>
+        				       <div class="col-lg-3 ">
+                        c
+            
+        				       </div>
+        				       <div class="col-lg-3 ">
+                        d
+            
+        				       </div>
+            
+        				   </div>
+        				   <div class="col-lg-1 ">
+                         <div class="col-lg-3 ">
+                        al
+            
+        				       </div>
+        				       <div class="col-lg-3 ">
+                        bet
+            
+        				       </div>
+        				       <div class="col-lg-3 ">
+                        gam
+            
+        				       </div>
+        				       <div class="col-lg-3 ">
+                        
+            4
+        				       </div>
+            
+        				   </div>
+        				   <div class="col-lg-1 ">
+                         <div class="col-lg-3 ">
+                        
+            
+        				       </div>
+        				       <div class="col-lg-3 ">
+                        
+            
+        				       </div>
+        				       <div class="col-lg-3 ">
+                        3
+            
+        				       </div>
+        				       <div class="col-lg-3 ">
+                        
+            
+        				       </div>
+            
+        				   </div>
+        				   <div class="col-lg-1 ">
+                         <div class="col-lg-3 ">
+                        
+            1
+        				       </div>
+        				       <div class="col-lg-3 ">
+                        
+            
+        				       </div>
+        				       <div class="col-lg-3 ">
+                        
+            
+        				       </div>
+        				       <div class="col-lg-3 ">
+                        
+            
+        				       </div>
+            
+        				   </div>
+        				   <div class="col-lg-1 ">
+                         <div class="col-lg-3 ">
+                        
+            
+        				       </div>
+        				       <div class="col-lg-3 ">
+                        
+            
+        				       </div>
+        				       <div class="col-lg-3 ">
+                        
+            
+        				       </div>
+        				       <div class="col-lg-3 ">
+                        
+            
+        				       </div>
+            
+        				   </div>
+        				  <div class="col-lg-1 ">
+                         <div class="col-lg-3 ">
+                        
+            
+        				       </div>
+        				       <div class="col-lg-3 ">
+                        
+            
+        				       </div>
+        				       <div class="col-lg-3 ">
+                        
+            
+        				       </div>
+        				       <div class="col-lg-3 ">
+                        
+            
+        				       </div>
+            
+        				   </div>
+        				  <div class="col-lg-1 ">
+                         <div class="col-lg-3 ">
+                        
+            
+        				       </div>
+        				       <div class="col-lg-3 ">
+                        4
+            
+        				       </div>
+        				       <div class="col-lg-3 ">
+                        
+            
+        				       </div>
+        				       <div class="col-lg-3 ">
+                        
+            
+        				       </div>
+            
+        				   </div>
+        				   <div class="col-lg-1 ">
+                         <div class="col-lg-3 ">
+                        
+            
+        				       </div>
+        				       <div class="col-lg-3 ">
+                        
+            
+        				       </div>
+        				       <div class="col-lg-3 ">
+                        
+            
+        				       </div>
+        				       <div class="col-lg-3 ">
+                        
+            
+        				       </div>
+            
+        				   </div>
+        				  <div class="col-lg-1 ">
+                         <div class="col-lg-3 ">
+                        
+            
+        				       </div>
+        				       <div class="col-lg-3 ">
+                        
+            
+        				       </div>
+        				       <div class="col-lg-3 ">
+                        
+            
+        				       </div>
+        				       <div class="col-lg-3 ">
+                        
+            
+        				       </div>
+            
+        				   </div>
+        				   <div class="col-lg-1 ">
+                         <div class="col-lg-3 ">
+                        
+            
+        				       </div>
+        				       <div class="col-lg-3 ">
+                        
+            
+        				       </div>
+        				       <div class="col-lg-3 ">
+                        
+            
+        				       </div>
+        				       <div class="col-lg-3 ">
+                        
+            
+        				       </div>
+            
+        				   </div>
+        				   <div class="col-lg-1 ">
+                         <div class="col-lg-3 ">
+                        
+            
+        				       </div>
+        				       <div class="col-lg-3 ">
+                        
+            
+        				       </div>
+        				       <div class="col-lg-3 ">
+                        
+            
+        				       </div>
+        				       <div class="col-lg-3 ">
+                        
+            
+        				       </div>
+            
+        				   </div>
+                 </div>
+        				
+        				
+            
+        </section>
+      
+             
+       
+      </div>
+   
+      
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->    
+    
+      
+    
+{% endblock %}
+
+

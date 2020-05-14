@@ -1,0 +1,55 @@
+from django.urls import path
+from . import views
+from django.contrib import admin 
+
+
+app_name='aerodromes'
+
+urlpatterns = [
+  
+    path('', views.home, name='accueil'),
+    path('evts/', views.pageevts, name='accueilevts'),
+    path('evts/perilanimal', views.afficherperilanimal, name='perilanimal'),
+    path('evts/requetesepecif', views.afficherrequetesepecif, name='requetesepecif'),
+    path('evts/requetesepecif/resultatrequetespeci', views.afficherresultatrequetespeci, name='resultatrequetespeci'),
+    
+    path('evts/feunalaser', views.afficherfeunalaser, name='feunalaser'),
+    path('psc/', views.afficherpsc, name='psc'),
+    path('psc/aibd', views.afficherpscaibd, name='pscaibd'),
+    path('psc/slouis', views.afficherpscslouis, name='slouis'),
+    path('psc/tamb', views.afficherpsctamb, name='tamb'),
+    path('psc/cap', views.afficherpsccap, name='cap'),
+    path('psc/zig', views.afficherpsczig, name='zig'),
+    path('pscr/', views.afficherpscr, name='pscr'),
+    path('pscr/pscrcentre', views.afficherpscrcentre, name='pscrcentre'),
+    path('pscr/pscrnord', views.afficherpscrnord, name='pscrnord'),
+    path('pscr/pscrest', views.afficherpscrest, name='pscrest'),
+    path('pscr/pscrsud', views.afficherpscrsud, name='pscrsud'),
+    path('realise/', views.afficherrealise, name='realise'),
+    path('aerodromesSenegal/', views.afficheraerodromesSenegal, name='aerodromesSenegal'),
+    path('psc/inspectionsdepartement/', views.afficherinspectionsdepartement, name='inspectionsdepartement'),
+    path('pscr/inspectionsrdepartement/', views.afficherinspectionsrdepartement, name='inspectionsrdepartement'),
+    path('psc/inspectionsdepartement/aibddepart', views.afficherpscaibddepart, name='pscaibddepart'),
+    path('psc/inspectionsdepartement/slouisdepart', views.afficherpscslouisdepart, name='pscslouisdepart'),
+    path('psc/inspectionsdepartement/tambdepart', views.afficherpsctambdepart, name='psctambdepart'),
+    path('psc/inspectionsdepartement/capdepart', views.afficherpsccapdepart, name='psccapdepart'),
+    path('psc/inspectionsdepartement/zigdepart', views.afficherpsczigdepart, name='psczigdepart'),
+    path('planform/', views.homeplanform, name='accueilplanform'),
+    path('planning/', views.afficherplanning, name='planning'),
+    path('planning/formationsdepartement/', views.afficherformationsdepartement, name='formationsdepartement'),
+    path('realise/dossierinspection', views.afficherdossierinspection, name='dossierinspection'),
+    path('formationsrealisees/', views.afficherformationsrealisees, name='formationsrealisees'),
+    path('prioriteformations/', views.afficherprioriteformations, name='prioriteformations'),
+    path('listeinspecteurs/', views.afficherlisteinspecteurs, name='listeinspecteurs'),  
+    
+    path('formationsrealisees/dossierformation', views.afficherdossierformation, name='dossierformation'),
+    path('listeinspecteurs/dossieragent', views.afficherdossierinspecteur, name='dossieragent'),
+    
+    path('aerodromesSenegal/dossieraerodrome', views.afficherdossieraerodrome, name='dossieraerodrome'),
+    path('evts/dossierevenementsecu', views.afficherdossierevenementsecu, name='dossierevenementsecu'),
+    
+    
+        
+    path('admin/', admin.site.urls),   
+]
+

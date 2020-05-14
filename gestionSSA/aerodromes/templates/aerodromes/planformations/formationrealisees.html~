@@ -1,0 +1,249 @@
+{% extends 'adminlte/base.html' %}
+{% load static %}
+
+{% block extra_head %}
+
+	<link href="{% static "aerodromes/fullcalendar/bower_components/fullcalendar/dist/fullcalendar.min.css" %}" rel="stylesheet" />
+	
+	 <!-- Bootstrap 3.3.7 -->
+  <link href="{% static "aerodromes/bower_components/bootstrap/dist/css/bootstrap.min.css" %}" rel="stylesheet" />
+  <!-- Font Awesome -->
+  <link href="{% static "aerodromes/bower_components/font-awesome/css/font-awesome.min.css" %}" rel="stylesheet"/>
+  <!-- Ionicons -->
+ <link href="{% static "aerodromes/bower_components/Ionicons/css/ionicons.min.css" %}"  rel="stylesheet"/>
+  <!-- DataTables -->
+  <link href="{% static "aerodromes/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css" %}" rel="stylesheet" />
+{% endblock %}
+{% block title %}ANACIM DNAA{% endblock %}
+{% block logo_href %}/{% endblock %}
+{% block page_name %}TABLEAU DE BORD{% endblock %}
+{% block page_actions %}{% endblock %}
+{% block page_description %}{% endblock %}
+{% block breadcrumbs %} {% endblock %}
+
+
+{% block content_wrapper %}
+  
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        FORMATIONS REALISEES/
+        <small>Suivi des Indicateurs</small>
+      </h1>
+     
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <!-- Small boxes (Stat box) -->
+      <div class="row">
+        <div class="col-lg-3 col-xs-6">
+          <!-- small box -->
+          <div class="small-box bg-blue">
+            <div class="inner">
+              <h3>{{ nombreinspaerointern }}</h3>
+
+              <p>Aéroports Internationaux</p>
+            </div>
+            <div class="icon">
+            <i class="ion ion-stats-bars"></i>
+              <i class="fa fa-plane"></i>
+            </div>
+            <a href="#" class="small-box-footer">Plus d'info <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-3 col-xs-6">
+          <!-- small box -->
+          <div class="small-box bg-blue">
+            <div class="inner">
+              <h3>{{ nombreinspaeroregion }}</h3>
+
+              <p>Aérodromes Régionaux</p>
+            </div>
+            <div class="icon">
+              
+              <i class="fa fa-plane"></i>
+            </div>
+            <a href="#" class="small-box-footer">Plus d'info <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-3 col-xs-6">
+          <!-- small box -->
+          <div class="small-box bg-blue">
+            <div class="inner">
+              <h3>{{ nombreinspecinopinee }}</h3>
+
+              <p>Inspections Inopinées</p>
+            </div>
+            <div class="icon">
+             <i class="fa fa-eye"></i>
+              
+            </div>
+            <a href="#" class="small-box-footer">Plus d'info <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-3 col-xs-6">
+          <!-- small box -->
+          <div class="small-box bg-blue">
+            <div class="inner">
+              <h3>{{ nombreinspectioautre }}</h3>
+
+              <p>Autres</p>
+            </div>
+            <div class="icon">
+              <i class="ion ion-pie-graph"></i>
+            </div>
+            <a href="#" class="small-box-footer">Plus d'info <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+        <!-- ./col -->
+      </div>
+      
+      <div class="row">
+         <div class="col-xs-12">
+          
+
+          <div class="box">
+           
+            <!-- /.box-header -->
+            <div class="box-body">
+              <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                  <th>Code</th>
+                  <th>Type</th>
+                  <th>Lieu</th>
+                  <th>Période</th>
+                  <th>Département</th>
+                  <th>Matricule Ag.</th>
+                  <th>Périodicité</th>
+                  <th>Attestation</th>
+                  
+                </tr>
+                </thead>
+                <tbody>
+                
+                {% for inspect in inspectionsrealises %}
+                <tr>
+                  <td>
+                  {{ inspect.codeinsp }}
+                    
+             
+                  </td>
+                  <td>{{ inspect.typeinsp }}</td>
+                  <td>{{ inspect.nomaero }}</td>
+                  <td>Du {{ inspect.datedebutinsp }} Au {{ inspect.datefininsp }}</td>
+                  <td>{{ inspect.nomdepartement }}</td>
+                  <td> {% for domaine in inspect.domaineinsp.all %}   
+                  {{ domaine }}/
+                  {% endfor %}
+                  </td>
+                  <td> {% for insp in inspect.agentac.all %}   
+                  {{ insp.nomag }}:{{ insp }} -
+                  {% endfor %}
+                  </td>
+                  <td><a href="{{ inspect.rapportinsp.url }}">Telecharger le Rapport</a></td>
+                  
+                  
+                </tr>
+                 {% endfor %}       
+               
+               
+              </tbody>
+              </table>
+                     
+             <tfoot>
+             </tfoot>
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+        </div>
+      
+       
+      </div>
+      <!-- /.row -->
+      <section class="content-header">
+      <h1>
+        DOSSIER DES FORMATIONS /
+        <small>Suivi des Formations</small>
+      </h1>
+     
+    </section>
+      <div class="row">
+         <div class="col-xs-12">
+          
+
+          <div class="box">
+           
+            <!-- /.box-header -->
+            <div class="box-body">
+              <form action="{% url 'aerodromes:dossierinspection' %}" method="post">
+               <div class="form-group"><p>
+                <label><h5>Choisir le code de la formation et valider pour afficher plus d'informations</h5> </label>
+                </p>
+                <br>
+                
+                 {% csrf_token %}
+                
+    				  {{ form }}
+    				</div>
+                
+              <input type="submit" value="Valider">
+              </form>  
+              
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+        </div>
+      
+       
+      </div>
+      
+      
+    </section>
+    <!-- /.content -->
+  
+  </div>
+  <!-- /.content-wrapper -->        
+{% endblock %}
+
+{% block extra_foot %}
+
+
+<!-- jQuery 3 -->
+<!-- <script src="{% static "planformations/bower_components/jquery/dist/jquery.min.js" %}"></script>
+<!-- Bootstrap 3.3.7 -->
+<!-- <script src="{% static "planformations/bower_components/bootstrap/dist/js/bootstrap.min.js" %}"></script>
+<!-- DataTables -->
+<script src="{% static "aerodromes/bower_components/datatables.net/js/jquery.dataTables.js" %}"></script>
+<script src="{% static "aerodromes/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js" %}"></script>
+<!-- SlimScroll -->
+<script src="{% static "aerodromes/bower_components/jquery-slimscroll/jquery.slimscroll.min.js" %}"></script>
+<!-- FastClick -->
+<script src="{% static "aerodromes/bower_components/fastclick/lib/fastclick.js" %}"></script>
+
+
+<!-- page script -->
+<script>
+  $(function () {
+    $('#example1').DataTable()
+    $('#example2').DataTable({
+      'paging'      : true,
+      'lengthChange': false,
+      'searching'   : false,
+      'ordering'    : true,
+      'info'        : true,
+      'autoWidth'   : false
+    })
+  })
+</script>
+
+
+{% endblock %}

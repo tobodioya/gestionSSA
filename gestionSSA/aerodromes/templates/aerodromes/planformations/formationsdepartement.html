@@ -1,0 +1,277 @@
+{% extends 'adminlte/base.html' %}
+{% load static %}
+{% block extra_head %}
+
+ <!-- <link href="{% static "planformations/fullcalendar/core/main.css" %}" rel="stylesheet" />
+ <link href="{% static "planformations/fullcalendar/daygrid/main.css" %}" rel="stylesheet" /> -->
+
+<link href="{% static "aerodromes/fullcalendar/fullcalendar.css" %}" rel="stylesheet" />
+<link href="{% static "aerodromes/bower_components/select2/dist/css/select2.min.css" %}" rel="stylesheet" />
+
+{% endblock %}
+{% block title %}ANACIM DNAA{% endblock %}
+{% block logo_href %}/{% endblock %}
+{% block page_name %}TABLEAU DE BORD{% endblock %}
+{% block page_actions %}{% endblock %}
+{% block page_description %}{% endblock %}
+{% block breadcrumbs %}
+
+{% endblock %}
+{% block content_wrapper %}
+   
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+  
+    <section class="content-header">
+    {% if nbrechevauchements > 0 %}
+       
+    <div class="dropdown notifications-menu  pull-right" >
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              <i class="fa fa-warning text-yellow"></i> {{ nbrechevauchements }}
+              <!--<span class="label label-warning">{{ nbrechevauchements }}</span>-->
+            </a>
+            <ul class="dropdown-menu">
+              <li class="header">Vous avez {{ nbrechevauchements }} chevauchement(s):  formations impactées</li>
+              
+                  
+                  {% for f in formationimpactees %}
+                  
+                  <li>
+                <!-- inner menu: contains the actual data -->
+                <a href="/admin">
+                      <i class="fa fa-warning text-yellow"></i> 
+                      {{ f.code1 }}_{{ f.matricule1 }}  -- du {{ f.debut1 }} au {{ f.fin1 }} et 
+                      {{ f.code2 }}_{{ f.matricule2 }} -- du {{ f.debut2 }} au {{ f.fin2 }} 
+                    </a>
+                  </li>
+                  {% endfor %}
+                  </ul>
+     
+    </div>
+     
+     {% endif %}
+      <h1>
+        PLANNING DE FORMATIONS PAR DEPARTEMENT/
+        <small>des Agents</small>
+      </h1>
+     
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+ 
+      
+      <div class="row">
+       <div class="col-lg-3 col-xs-4">
+      
+       <div class="row">
+        <div class="col-lg-12 col-xs-12">
+        <h5>  INSPECTEURS </h5>
+               
+        </div>
+        
+        </div>
+        <div class="row">
+        
+        <div class="col-lg-12 col-xs-12">
+         
+            <div class="table-responsive mailbox-messages">
+             <table class="table table-hover table-striped">
+             <tbody>
+         
+             {% for inspect in listeinspecteurs %}
+             <tr>
+                  <td><b>{{ inspect.matriculebf }}-{{ inspect.prenomsagbf }} {{ inspect.nomagbf }} </b></td>
+                    
+             </tr>
+             {% endfor %}
+             
+            
+             </tbody>
+             </table>
+             </div>
+              <form action="{% url 'aerodromes:formationsdepartement' %}" method="post">
+    
+    
+               <div class="form-group">
+                <label><h5>Choisir Département et valider pour afficher le planning</h5> </label>
+                 {% csrf_token %}
+    				  {{ form }}
+    				 
+               </div>    
+              
+              <input type="submit" value="VALIDER">
+              </form>
+
+        </div>
+        
+       
+        </div>
+        </div>
+       <div class="col-lg-9 col-xs-8">
+      	 <div id="calendar"></div>
+       </div>
+      </div>
+               
+
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->    
+   
+    
+{% endblock %}
+{% block extra_foot %}
+<!--<script src="{% static "planformations/fullcalendar/core/main.js" %}"></script>
+<script src="{% static "planformations/fullcalendar/daygrid/main.js" %}"></script>-->
+
+<script src="{% static "aerodromes/fullcalendar/bower_components/moment/moment.js" %}"></script>
+<script src="{% static "aerodromes/fullcalendar/fullcalendar.js" %}"></script>
+<script src="{% static "aerodromes/bower_components/fullcalendar/dist/locale/fr.js" %}"></script>
+<script src="{% static "aerodromes/bower_components/select2/dist/js/select2.full.min.js" %}"></script>
+
+<script type="text/javascript" >
+
+// Code goes here
+$(document).ready(function() {
+
+/*var debutinspection = "{{ debutinsp }}",
+	 fininspection = "{{ fininsp }}",
+	 domaineinspection = "{{ domaineinsp }}",
+	 /*inspection_bon_format
+	 for (i in inspections) {
+	 inspection.
+	 	
+	 }
+	     
+	 domaineinspection = domaineinspection.replace("[","")
+	 domaineinspection = domaineinspection.replace("]","")
+	 domaineinspection = domaineinspection.replace(/&#39;/g, "")
+	 domaineinspection = domaineinspection.split(',')
+	 
+	 fininspection = fininspection.replace("[","")
+	 fininspection = fininspection.replace("]","")
+	 fininspection = fininspection.replace(/&#39;/g, "")
+	 fininspection = fininspection.split(',')
+	 
+	 debutinspection = debutinspection.replace("[","")
+	 debutinspection = debutinspection.replace("]","")
+	 debutinspection = debutinspection.replace(/&#39;/g, "")
+	 debutinspection = debutinspection.split(',')*/
+	 
+	 
+	 function couleur(nomaerodrome) {
+	 couleurevt = 'blue';
+	 if (nomaerodrome.search(/aibd/i) >= 0) 
+	 	couleurevt = 'green';
+	 if (nomaerodrome.search(/louis/i) >= 0) 
+	 	couleurevt = 'orange';
+	  if (nomaerodrome.search(/tamba/i) >= 0) 
+	 	couleurevt = 'blue';
+	 if (nomaerodrome.search(/zig/i) >= 0) 
+	 	couleurevt = 'red';
+	 if (nomaerodrome.search(/cap/i) >= 0) 
+	 	couleurevt = 'black';
+	 		 
+	 return couleurevt;
+	 }
+	 
+
+
+
+  // page is now ready, initialize the calendar...
+
+  var calendar = $('#calendar').fullCalendar({
+    // put your options and callbacks here
+    //lang  : 'fr',
+    header: {
+      left: 'prev,next today',
+      center: 'title',
+      right: 'year,month,basicWeek,basicDay'
+
+    },
+     buttonText: {
+        today: "Aujourd'hui",
+        year : 'Année',
+        month: 'Mois',
+        week : 'Semaine',
+        day  : 'Jour'
+      },
+  
+    //timezone: 'local',
+    height: "auto",
+    selectable: true,
+    dragabble: true,
+    defaultView: 'year',
+    yearColumns: 3,
+
+    durationEditable: true,
+    bootstrap: false,
+
+    events: [
+    {% for i in listeformations %}
+     
+    {  
+    
+      title: '{{ i.matriculebf }}' + '-' + '{{ i.nomformbf }}',         
+      start:  '{{ i.debutformbf }}',
+      end:  '{{ i.finformbf }}',
+      allDay: true,
+      description: '{{ i.lieuformbf }}',
+      
+      //editable: true,
+      
+      eventDurationEditable: true,
+      color : couleur('{{ i.nomformbf }}'),
+    }, 
+   
+   
+    {% endfor %}
+    ],
+    /*select: function(start, end, allDay) {
+      var title = prompt('Libellé de la mission:');
+      if (title) {
+        var event = {
+          title: title,
+          start: start.clone(),
+          end: end.clone(),
+          allDay: true,
+          editable: true,
+          eventDurationEditable: true,
+          eventStartEditable: true,
+          color: 'red',
+        };
+
+        calendar.fullCalendar('renderEvent', event, true);
+      }
+    },*/
+    
+    eventRender: function(event, element) {
+    $(element).tooltip({title: event.title +  " du " + event.start.date() + " au " + event.end.date() + " à " + event.description});
+}
+    
+  });
+});
+
+ $(function () {
+ //Enable check and uncheck all functionality
+    $('.checkbox-toggle').click(function () {
+      var clicks = $(this).data('clicks')
+      if (clicks) {
+        //Uncheck all checkboxes
+        $('.mailbox-messages input[type=\'checkbox\']').prop('checked', false)
+        
+      
+      } else {
+        //Check all checkboxes
+        $('.mailbox-messages input[type=\'checkbox\']').prop('checked', true)
+       //document.getElementById("sli").checked = false
+      }
+      $(this).data('clicks', !clicks)
+    })
+})
+</script>
+
+{% endblock %}
+
+

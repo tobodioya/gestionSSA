@@ -1,0 +1,176 @@
+{% extends 'adminlte/base.html' %}
+{% load static %}
+
+{% block extra_head %}
+
+	<link href="{% static "aerodromes/fullcalendar/bower_components/fullcalendar/dist/fullcalendar.min.css" %}" rel="stylesheet" />
+	
+	 <!-- Bootstrap 3.3.7 -->
+  <link href="{% static "aerodromes/bower_components/bootstrap/dist/css/bootstrap.min.css" %}" rel="stylesheet" />
+  <!-- Font Awesome -->
+  <link href="{% static "aerodromes/bower_components/font-awesome/css/font-awesome.min.css" %}" rel="stylesheet"/>
+  <!-- Ionicons -->
+ <link href="{% static "aerodromes/bower_components/Ionicons/css/ionicons.min.css" %}"  rel="stylesheet"/>
+  <!-- DataTables -->
+  <link href="{% static "aerodromes/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css" %}" rel="stylesheet" />
+{% endblock %}
+{% block title %}ANACIM DNAA{% endblock %}
+{% block logo_href %}/{% endblock %}
+{% block page_name %}TABLEAU DE BORD{% endblock %}
+{% block page_actions %}{% endblock %}
+{% block page_description %}{% endblock %}
+{% block breadcrumbs %} {% endblock %}
+
+
+{% block content_wrapper %}
+  
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        LISTE DES INSPECTEURS/
+        <small>Suivi dossier</small>
+      </h1>
+     
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+
+      
+      <div class="row">
+         <div class="col-xs-12">
+          
+
+          <div class="box">
+           
+            <!-- /.box-header -->
+            <div class="box-body">
+              <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                  <th>Matricule</th>
+                  <th>Prénom(s) Nom</th>
+                  <th>Fonction</th>
+                  <th>Date de naissance</th>
+                   <th>Lieu</th>
+                  <th>Direction</th>
+                  <th>Département</th>
+                  <th>Service</th>
+                 
+                  
+                </tr>
+                </thead>
+                <tbody>
+                
+                {% for ins in listeinspecteurs %}
+                <tr>
+                  <td>{{ ins.matriculeag }}</td>
+                  <td>{{ ins.prenomsag }} {{ ins.nomag }}</td>
+                  <td>{{ ins.fonctionag }}</td>
+                  <td>{{ ins.naissanceag }}</td>
+                  <td>{{ ins.lieunaisag }}</td>
+                  <td>{{ ins.serviceac.departementac.directionac.nomdir }}</td>
+                  <td>{{ ins.serviceac.departementac.nomdep }}</td>
+                  <td>{{ ins.serviceac.nomser }}</td>
+                  
+                  
+                  
+                </tr>
+                 {% endfor %}       
+               
+               
+              </tbody>
+              </table>
+                     
+             <tfoot>
+             </tfoot>
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+        </div>
+      
+       
+      </div>
+      <!-- /.row -->
+      <section class="content-header">
+      <h1>
+        DOSSIER INSPECTEURS /
+        <small>Suivi</small>
+      </h1>
+     
+    </section>
+      <div class="row">
+         <div class="col-xs-12">
+          
+
+          <div class="box">
+           
+            <!-- /.box-header -->
+            <div class="box-body">
+              <form action="{% url 'aerodromes:dossieragent' %}" method="post">
+               <div class="form-group"><p>
+                <label><h5>Choisir le matricule de l'inspecteur pour afficher plus d'informations</h5> </label>
+                </p>
+                <br>
+                
+                 {% csrf_token %}
+                
+    				  {{ form }}
+    				</div>
+                
+              <input type="submit" value="Valider">
+              </form>  
+              
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+        </div>
+      
+       
+      </div>
+      
+      
+    </section>
+    <!-- /.content -->
+  
+  </div>
+  <!-- /.content-wrapper -->        
+{% endblock %}
+
+{% block extra_foot %}
+
+
+<!-- jQuery 3 -->
+<!-- <script src="{% static "planformations/bower_components/jquery/dist/jquery.min.js" %}"></script>
+<!-- Bootstrap 3.3.7 -->
+<!-- <script src="{% static "planformations/bower_components/bootstrap/dist/js/bootstrap.min.js" %}"></script>
+<!-- DataTables -->
+<script src="{% static "aerodromes/bower_components/datatables.net/js/jquery.dataTables.js" %}"></script>
+<script src="{% static "aerodromes/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js" %}"></script>
+<!-- SlimScroll -->
+<script src="{% static "aerodromes/bower_components/jquery-slimscroll/jquery.slimscroll.min.js" %}"></script>
+<!-- FastClick -->
+<script src="{% static "aerodromes/bower_components/fastclick/lib/fastclick.js" %}"></script>
+
+
+<!-- page script -->
+<script>
+  $(function () {
+    $('#example1').DataTable()
+    $('#example2').DataTable({
+      'paging'      : true,
+      'lengthChange': false,
+      'searching'   : false,
+      'ordering'    : true,
+      'info'        : true,
+      'autoWidth'   : false
+    })
+  })
+</script>
+
+
+{% endblock %}

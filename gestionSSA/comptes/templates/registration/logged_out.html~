@@ -1,0 +1,11 @@
+{% extends  'baselog.html' %}
+
+{% block breadcrumbs %}<div class="breadcrumbs"><a href="#"></a></div>{% endblock %}
+
+{% block content %}
+
+<p>Merci de vous être déconnecté!</p>
+
+<p><a href="{% url 'comptes:login' %}">Vous connecter à nouveau</a></p>
+
+{% endblock %}

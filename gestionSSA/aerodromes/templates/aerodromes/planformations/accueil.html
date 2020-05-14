@@ -1,0 +1,537 @@
+{% extends 'adminlte/base.html' %}
+{% load static %}
+
+{% block extra_head %}
+
+ <style>
+	canvas{
+		-moz-user-select: none;
+		-webkit-user-select: none;
+		-ms-user-select: none;
+	}
+ </style>
+
+	
+	 <!-- Bootstrap 3.3.7 -->
+  <link href="{% static "aerodromes/bower_components/bootstrap/dist/css/bootstrap.min.css" %}" rel="stylesheet" />
+  <!-- Font Awesome -->
+  <link href="{% static "aerodromes/bower_components/font-awesome/css/font-awesome.min.css" %}" rel="stylesheet"/>
+  <!-- Ionicons -->
+ <link href="{% static "aerodromes/bower_components/Ionicons/css/ionicons.min.css" %}"  rel="stylesheet"/>
+ 
+  
+{% endblock %}
+{% block title %}ANACIM DNAA{% endblock %}
+{% block logo_href %}/{% endblock %}
+{% block page_name %}TABLEAU DE BORD{% endblock %}
+{% block page_actions %}{% endblock %}
+{% block page_description %}{% endblock %}
+{% block breadcrumbs %}
+
+{% endblock %}
+{% block content_wrapper %}
+
+  
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    
+     
+    <section class="content-header">
+    {% if nombrenotifications > 0 %}
+       
+    <div class="dropdown notifications-menu  pull-right" >
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              <i class="fa fa-bell-o"></i>
+              <span class="label label-warning">{{ nombrenotifications }}</span>
+            </a>
+            <ul class="dropdown-menu">
+              <li class="header">Vous avez {{ nombrenotifications }} notification(s):  inspection(s) à gérer</li>
+              
+                  
+                  {% for i in inspectionsaentamer %}
+                  
+                  <li>
+                <!-- inner menu: contains the actual data -->
+                <a href="/admin">
+                      <i class="fa fa-warning text-yellow"></i> {{ i.codeinsp }} --- {{ i.datedebutinsp }}
+                    </a>
+                  </li>
+                  {% endfor %}
+                  </ul>
+     
+    </div>
+     
+     {% endif %}
+   
+    
+    
+      <h1>
+        Résumé/
+        <small>Tableau de Suivi des Indicateurs</small>
+      </h1>
+      
+   
+     
+     
+    </section>
+    
+    
+    
+
+    <!-- Main content -->
+    <section class="content">
+    
+    
+      <!-- Small boxes (Stat box) -->
+      <div class="row">
+      
+        <div class="col-lg-3 col-xs-6">
+          <!-- small box -->
+          <div class="small-box bg-aqua">
+            <div class="inner">
+              <h3>{{ realisationinspection }}<sup style="font-size: 20px">%</sup></h3>
+
+              <p>Réalisation PSC</p>
+            </div>
+            <div class="icon">
+              <i class="fa fa-eye"></i>
+            </div>
+            <a href="{% url 'aerodromes:realise' %}" class="small-box-footer">Plus d'info <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-3 col-xs-6">
+          <!-- small box -->
+          <div class="small-box bg-aqua">
+            <div class="inner">
+              <h3>{{ realisationformation }}<sup style="font-size: 20px">%</sup></h3>
+
+              <p>Réalisation Plan de Formation</p>
+            </div>
+            <div class="icon">
+              <i class="fa fa-graduation-cap"></i>
+            </div>
+            <a href="{% url 'aerodromes:formationsrealisees' %}" class="small-box-footer">Plus d'info <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-3 col-xs-6">
+          <!-- small box -->
+          <div class="small-box bg-aqua">
+            <div class="inner">
+              <h3>{{ nbreevtsecuanneecourante }} vs {{ nbreevtsecuanneepreceden }}</h3>
+
+              <p>Nbre Evts séc. {{ anneecourante }} vs {{anneepassee}} </p>
+            </div>
+            <div class="icon">
+              <i class="fa fa-warning"></i>
+            </div>
+            <a href="{% url 'aerodromes:accueilevts' %}" class="small-box-footer">Plus d'info <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-3 col-xs-6">
+          <!-- small box -->
+          <div class="small-box bg-aqua">
+            <div class="inner">
+              <h3>{{nbreaerodcertifies}}/{{nbreinitialacertif}} -- {{nbreaerohomologues}}/{{nbreinitialahomolo}} </h3>
+              
+
+              <p>Certifiés -- Homologués</p>
+               </div>
+            <div class="icon">
+              <i class="fa fa-plane"></i>
+            </div>
+            <a href="{% url 'aerodromes:aerodromesSenegal' %}" class="small-box-footer">Plus d'info <i class="fa fa-arrow-circle-right"></i></a>
+        
+        </div>
+        <!-- ./col -->
+      </div>
+     </div>
+      <!-- /.row -->
+                 
+     <!--{{formattedmoisevent}}
+     {{evtsnbreparmois}}-->
+     
+      <div class="row">
+        
+        <div class="col-md-6">
+     <!--Donut-->
+     
+     <div id="canvas-holder">
+		<canvas id="chart-area"></canvas>
+	  </div>
+	
+	  <button id="changeCircleSize">Style de Présentation</button>
+	  <button class="top" title="" data-placement="top" data-toggle="tooltip" href="#" data-original-title="
+	   ANS: 'Approche non conforme'
+		PIN: 'Position inusuelle'
+		ECA: 'Evt lié aux conditions aerodrome'
+		SAI: 'Mise en oeuvre inadaptée des systèmes aéronef'
+		TRM: 'Travaux et maintenance'
+		MCO: 'Mauvaise coordination et opérations sol'
+		INC: 'Incursion sur piste'
+		PSV: 'Perte séparation en vol'
+		PES: 'Pénétration espace'
+		EXP: 'Exploitation'
+		PAN: 'Péril animalier dont aviaire'
+		FDG: 'Feux Dangereux, lasers'
+		MET: 'Météo'
+		DIB: 'Défaillance interfaces sol-bord'
+		EEA: 'Evt relatif entretien aeronef'
+		FFV: 'Feu-fumée en vol ou au sol'
+		DSB: 'Défaillance système à bord'
+		DPR: 'Dépressurisation'
+		FOD: 'Dommage suite FOD'
+		AUT: 'Autre' ">Légende
+	 
+	  </button>
+	  
+	  
+
+        </div>
+        <!-- /.Bar comparaison -->
+        <div class="col-md-6">
+        <div id="container">
+		   <canvas id="canvas"></canvas>
+	     </div>
+	    
+	            
+         
+        </div>
+      </div>
+      
+             
+
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->    
+    
+      
+    
+{% endblock %}
+
+{% block extra_foot %}
+
+<!--<script src="{% static "aerodromes/bower_components/datatables.net/js/jquery.dataTables.js" %}"></script>
+<script src="{% static "aerodromes/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js" %}"></script>-->
+
+<script src="{% static "aerodromes/bower_components/Chart.js-2.9.3/dist/Chart.min.js" %}"></script>
+<script src="{% static "aerodromes/bower_components/Chart.js-2.9.3/samples/utils.js" %}"></script>
+
+<!-- SlimScroll -->
+<script src="{% static "aerodromes/bower_components/jquery-slimscroll/jquery.slimscroll.min.js" %}"></script>
+<!-- FastClick -->
+<script src="{% static "aerodromes/bower_components/fastclick/lib/fastclick.js" %}"></script>
+
+
+<script>
+
+$('a').tooltip()
+
+function couleurtyp(typevt) {
+ couleur = 'rgb(255, 99, 132)';
+ if (typevt == 'ANS')
+   couleur = 'rgb(255, 99, 132)';
+ if (typevt == 'PIN')
+ 	couleur = 'rgb(255, 159, 64)';
+if (typevt == 'ECA')
+ 	couleur = 'rgb(255, 205, 86)'; 	
+if (typevt == 'SAI')
+ 	couleur = 'rgb(75, 192, 192)'; 	
+if (typevt == 'TRM')
+ 	couleur = 'rgb(54, 162, 235)'; 	      
+if (typevt == 'MCO')
+ 	couleur = 'rgb(153, 102, 255)'; 	
+if (typevt == 'INC')
+ 	couleur = 'rgb(201, 183, 207)'; 	
+if (typevt == 'PSV')
+ 	couleur = 'rgb(127, 127, 127)'; 	
+if (typevt == 'PES')
+ 	couleur = 'rgb(80, 153, 187)'; 	
+if (typevt == 'EXP')
+ 	couleur = 'rgb(70, 143, 255)'; 	
+if (typevt == 'PAN')
+ 	couleur = 'rgb(60, 133, 167)'; 	
+if (typevt == 'FDG')
+ 	couleur = 'rgb(50, 255, 157)'; 	 	
+if (typevt == 'MET')
+ 	couleur = 'rgb(250, 93, 147)'; 	
+if (typevt == 'DIB')
+ 	couleur = 'rgb(30, 83, 137)'; 	
+if (typevt == 'EEA')
+ 	couleur = 'rgb(20, 73, 127)'; 	
+if (typevt == 'FFV')
+ 	couleur = 'rgb(10, 203, 117)'; 	
+if (typevt == 'DSB')
+ 	couleur = 'rgb(200, 101, 17)'; 	
+if (typevt == 'DPR')
+ 	couleur = 'rgb(220, 223, 227)'; 	
+if (typevt == 'FOD')
+ 	couleur = 'rgb(241, 233, 207)'; 	
+if (typevt == 'AUT')
+ 	couleur = 'rgb(15, 23, 15)'; 	 	
+ 	
+ return couleur;	      
+ }
+  
+
+function mois(moisnbre) {
+moislettre = ''
+ if (moisnbre == '1')
+   moislettre = 'Janvier';
+ if (moisnbre == '2')
+ 	moislettre = 'Février';
+if (moisnbre == '3')
+ 	moislettre = 'Mars'; 	
+if (moisnbre == '4')
+ 	moislettre = 'Avril'; 	
+if (moisnbre == '5')
+ 	moislettre = 'Mai'; 	      
+if (moisnbre == '6')
+ 	moislettre = 'Juin'; 	
+if (moisnbre == '7')
+ 	moislettre = 'Juillet'; 	
+if (moisnbre == '8')
+ 	moislettre = 'Août'; 	
+if (moisnbre == '9')
+ 	moislettre = 'Septembre'; 	
+if (moisnbre == '10')
+ 	moislettre = 'Octobre'; 	
+if (moisnbre == '11')
+ 	moislettre = 'Novembre'; 	
+if (moisnbre == '12')
+ 	moislettre = 'Décembre'; 
+
+return moislettre;
+} 	
+	
+		var config = {
+			type: 'doughnut',
+			data: {
+				datasets: [{
+					data: [
+						
+						{% for tn in evtstypnbre %}
+						'{{ tn.nbreevt }}',
+						{% endfor %}
+					],
+					backgroundColor: [
+						/*window.chartColors.red,
+						window.chartColors.blue,*/
+						
+						{% for c in evtstypnbre %}
+						 couleurtyp('{{c.typeevt}}'),
+						{% endfor %}
+						
+						
+					],
+					label: 'Dataset 1'
+				}],
+				labels: [
+					{% for tn in evtstypnbre %}
+						'{{ tn.typeevt }}',
+						
+					{% endfor %}
+				]
+			},
+			options: {
+				responsive: true,
+				legend: {
+					position: 'top',
+				},
+				title: {
+					display: true,
+					text: 'Répartition des événements de sécurité de l\'année par type'
+				},
+				animation: {
+					animateScale: true,
+					animateRotate: true
+				}
+			}
+		};
+/*
+				
+		document.getElementById('addDataset').addEventListener('click', function() {
+			var newDataset = {
+				backgroundColor: [],
+				data: [],
+				label: 'Année précédente',
+			};
+	   
+				
+				{% for e in evtsptypnbre %}
+					newDataset.data.push('{{ e.nbreevt }}');
+					config.data.labels.push('{{e.typeevt}}-{{anneepassee}}');
+					
+					newDataset.backgroundColor.push(couleurtyp('{{e.typeevt}}'));
+					
+						
+				{% endfor %}
+				
+				
+
+			config.data.datasets.push(newDataset);
+			window.myDoughnut.update();
+		});
+
+		document.getElementById('addData').addEventListener('click', function() {
+			if (config.data.datasets.length > 0) {
+				config.data.labels.push('data #' + config.data.labels.length);
+
+				var colorName = colorNames[config.data.datasets[0].data.length % colorNames.length];
+				var newColor = window.chartColors[colorName];
+
+				config.data.datasets.forEach(function(dataset) {
+					dataset.data.push(randomScalingFactor());
+					dataset.backgroundColor.push(newColor);
+				});
+
+				window.myDoughnut.update();
+			}
+		});
+
+		document.getElementById('removeDataset').addEventListener('click', function() {
+			config.data.datasets.splice(1, 1);
+			window.myDoughnut.update();
+		});
+
+		*/
+
+		document.getElementById('changeCircleSize').addEventListener('click', function() {
+			if (window.myDoughnut.options.circumference === Math.PI) {
+				window.myDoughnut.options.circumference = 2 * Math.PI;
+				window.myDoughnut.options.rotation = -Math.PI / 2;
+			} else {
+				window.myDoughnut.options.circumference = Math.PI;
+				window.myDoughnut.options.rotation = -Math.PI;
+			}
+
+			window.myDoughnut.update();
+		});
+		
+		
+				
+		
+		var color = Chart.helpers.color;
+		var barChartData = {
+			labels: [
+			      {% for t in evtsnbreparmois %}
+						mois('{{ t.moisevt }}'),
+					{% endfor %}
+					],
+			datasets: [{
+				label: 'Evénements année {{anneecourante}}',
+				backgroundColor: color(window.chartColors.black).alpha(0.5).rgbString(),
+				borderColor: window.chartColors.red,
+				borderWidth: 1,
+				data: [
+					{% for t in evtsnbreparmois %}
+						'{{ t.nbreevtmois }}',
+					{% endfor %}
+					'{{ t.nbreevtmois }}'
+				]
+			}/*, {
+				label: 'Dataset 2',
+				backgroundColor: color(window.chartColors.blue).alpha(0.5).rgbString(),
+				borderColor: window.chartColors.blue,
+				borderWidth: 1,
+				data: [
+					randomScalingFactor(),
+					randomScalingFactor(),
+					randomScalingFactor(),
+					randomScalingFactor(),
+					randomScalingFactor(),
+					randomScalingFactor(),
+					randomScalingFactor()
+				]
+			}*/]
+
+		};
+
+		window.onload = function() {
+			var ctx = document.getElementById('canvas').getContext('2d');
+			window.myBar = new Chart(ctx, {
+				type: 'bar',
+				data: barChartData,
+				options: {
+					responsive: true,
+					legend: {
+						position: 'top',
+					},
+					title: {
+						display: true,
+						text: 'Le nombre d\'événements de sécurité de l\'année par mois'
+					}
+				}
+			});
+			
+			
+			
+			var ctx = document.getElementById('chart-area').getContext('2d');
+			window.myDoughnut = new Chart(ctx, config);
+	
+			
+			
+			
+
+		};
+
+	/*	document.getElementById('randomizeData1').addEventListener('click', function() {
+			var zero = Math.random() < 0.2 ? true : false;
+			barChartData.datasets.forEach(function(dataset) {
+				dataset.data = dataset.data.map(function() {
+					return zero ? 0.0 : randomScalingFactor();
+				});
+
+			});
+			window.myBar.update();
+		});
+
+		var colorNames = Object.keys(window.chartColors);
+		document.getElementById('addDataset1').addEventListener('click', function() {
+			var colorName = colorNames[barChartData.datasets.length % colorNames.length];
+			var dsColor = window.chartColors[colorName];
+			var newDataset = {
+				label: 'Dataset ' + (barChartData.datasets.length + 1),
+				backgroundColor: color(dsColor).alpha(0.5).rgbString(),
+				borderColor: dsColor,
+				borderWidth: 1,
+				data: []
+			};
+
+			for (var index = 0; index < barChartData.labels.length; ++index) {
+				newDataset.data.push(randomScalingFactor());
+			}
+
+			barChartData.datasets.push(newDataset);
+			window.myBar.update();
+		});
+
+		document.getElementById('addData1').addEventListener('click', function() {
+			if (barChartData.datasets.length > 0) {
+				var month = MONTHS[barChartData.labels.length % MONTHS.length];
+				barChartData.labels.push(month);
+
+				for (var index = 0; index < barChartData.datasets.length; ++index) {
+					// window.myBar.addData(randomScalingFactor(), index);
+					barChartData.datasets[index].data.push(randomScalingFactor());
+				}
+
+				window.myBar.update();
+			}
+		});
+
+		*/
+		
+		
+		
+
+
+</script>
+
+{% endblock %}
+
+

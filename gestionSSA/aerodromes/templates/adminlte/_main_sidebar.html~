@@ -1,0 +1,14 @@
+{% extends 'adminlte/lib/_main_sidebar.html' %}
+
+{% block nav7_links %}
+    <li>
+        <a href="/some/url">
+            <i class="fa fa-dashboard"></i> <span>Homegg</span>
+        </a>
+    </li>
+    <li>
+        <a href="/some/url">
+            <i class="fa fa-user"></i> <span>Users</span>
+        </a>
+    </li>
+{% endblock nav_links %}
